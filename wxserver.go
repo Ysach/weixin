@@ -11,14 +11,24 @@ import (
 	"strings"
 	"crypto/aes"
 	"crypto/cipher"
+	"io/ioutil"
+	"./wx"
+	"encoding/xml"
+	//"net/url"
 )
 
 const (
-	token = "farmer"
-	EncodingAESKey = "w8rEhj66F7FEFntY76xnxWSw3OJtNGsiPRppBlC8Jsb"
-	sCorpID = "wx107a9dfc59f70f80"
-	encodingKey = "w8rEhj66F7FEFntY76xnxWSw3OJtNGsiPRppBlC8Jsb="
+	token = ""
+	EncodingAESKey = ""
+	sCorpID = ""
 )
+
+type wxRequestBody struct {
+	XMLName    xml.Name `xml:"xml"`
+	FromUserName string	`xml:"FromUserName"`
+	Content    string	`xml:"Content`
+	AgentID    string	`xml:"AgentID"`
+}
 
 func makeSignature(timestamp, nonce string, echostr string) string {
 	sl := []string{token, timestamp, nonce, echostr}
@@ -29,7 +39,7 @@ func makeSignature(timestamp, nonce string, echostr string) string {
 
 }
 
-func validateUrl(w http.ResponseWriter, r *http.Request) bool {
+func validateUrl(w http.ResponseWriter, r *http.Request) {
 	timestamp := strings.Join(r.Form["timestamp"], "")
 	nonce := strings.Join(r.Form["nonce"], "")
 	echostr := strings.Join(r.Form["echostr"], "")
@@ -40,12 +50,12 @@ func validateUrl(w http.ResponseWriter, r *http.Request) bool {
 	//对比判断，如果相等，则验证通过，明文返回echostr解密的明文msg
 	if signatureGen != signatureIn {
 		log.Println("不相等")
-		return false
+		return
 	}
 	//解密收到的加密串儿 echostr
 
 	//先base64解密
-	selfKey, err := base64.StdEncoding.DecodeString(encodingKey)
+	selfKey, err := base64.StdEncoding.DecodeString(EncodingAESKey + "=")
 	if err != nil {
 		fmt.Println("Error")
 	}
@@ -65,29 +75,98 @@ func validateUrl(w http.ResponseWriter, r *http.Request) bool {
 	//截取字符串，将明文msg返回给微信
 	res_text := string(content)[20:39]
 	//获取解密的copID值
-	copID := string(content)[(len(string(content))-len(sCorpID))-7:]
-	fmt.Println(copID)
-	//fmt.Println(string(content))
-	//ln := strings.Trim(string(content), " ")
-	//fmt.Println(len(ln))
-	//fmt.Println(res_text)
+	corpID := string(content)[(len(string(content))-len(sCorpID))-7:(len(string(content))-len(sCorpID))+11]
+	//fmt.Println(copID)
+	fmt.Println(corpID)
+	if corpID != sCorpID {
+		fmt.Println("CorpID不相等，非法的请求!!")
+	}
+
 	fmt.Fprintf(w, res_text)
-	return true
 }
 
 func apiRequest(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	if !validateUrl(w, r) {
-		//log.Println("微信服务：请求非微信平台！")
-		//return
+	fmt.Println("Method:", r.Method)
+	//It does not work well, update later
+	if r.Method == "GET" {
+		validateUrl(w, r)
+	}else {
+		//r.ParseForm()
+		//定义
+		timestamp := strings.Join(r.Form["timestamp"], "")
+		nonce := strings.Join(r.Form["nonce"], "")
+		//获取Get传输过来的signature值
+		signatureIn := strings.Join(r.Form["msg_signature"], "")
+		//打印请求的URL参数
+		fmt.Println("path", r.URL.RawQuery)
+		fmt.Println(r.Method)
+		//fmt.Println(r.Body)
+		//validateUrl(w, r)
+		body, _ := ioutil.ReadAll(r.Body)
+		//sMsg := string(body)
+		//fmt.Println(string(body))
+		e, err := wechat.NewEncrypter(token, EncodingAESKey, sCorpID)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		res,_ := e.Decrypt(signatureIn, timestamp, nonce, body)
+		//xml_content := string(res)
+		//fmt.Println(xml_content)
+		//对收到的xml内容做处理
+		v := wxRequestBody{}
+		err = xml.Unmarshal(res, &v)
+		if err != nil {
+			fmt.Printf("error: %v", err)
+			return
+		}
+		//fmt.Println("FromUserName: ", v.FromUserName)
+		fmt.Println("收到的请求内容是: ", v.Content)
+		//fmt.Println("AgentID: ", v.AgentID)
+		//回复内容的主体，必须是xml格式，有ToUserName，FromUserName,CreateTime,MsgType,Content,MsgID,AgentID
+		RequestData := `<xml>
+					<ToUserName><![CDATA[`+ v.FromUserName +`]]></ToUserName>
+					<FromUserName><![CDATA[wx107a9dfc59f70f80]]></FromUserName>
+					<CreateTime>`+ timestamp +`</CreateTime>
+					<MsgType><![CDATA[text]]></MsgType>
+					<Content><![CDATA[欢迎您的加入！！！]]></Content>
+					<MsgId>7911869847084504763</MsgId>
+					<AgentID>`+ v.AgentID +`</AgentID>
+				</xml>`
+		//fmt.Println(RequestData)
+		//对回复的xml内容做加密
+		ReqValue, _ := e.Encrypt([]byte(RequestData))
+		//fmt.Println(string(ReqValue))
+		//返回给微信端，微信端会根据加密的内容解密获取content内容
+		fmt.Fprintf(w, string(ReqValue))
+
 	}
-	log.Println("微信服务: 微信URL正常！")
+
 }
 
+func wxsend(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	fmt.Println("Method:", r.Method)
+	if r.Method == "POST" {
+		msg := strings.Join(r.Form["msg"], "")
+		err := wechat.PostCustomMsg("farmer", msg)
+		if err != nil {
+			log.Println("Post Send Msg error", err)
+		}
+		log.Println("发送成功！！")
+		fmt.Fprintf(w, "发送成功")
+	}else {
+		log.Println("错误的请求！！")
+		fmt.Fprintf(w, "错误的请求！！")
+	}
+}
+
+//主函数
 func main() {
-	//aa()
-	log.Println("微信服务: 已经启动!")
+	log.Println("微信服务: 启动!")
 	http.HandleFunc("/api/", apiRequest)
+	http.HandleFunc("/wx/", wxsend)
 	err := http.ListenAndServe(":9001", nil)
 	if err != nil {
 		log.Fatal("微信服务: 端口监听和服务失败！, ", err)
