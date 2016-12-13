@@ -13,7 +13,7 @@ import (
 
 const (
 	Corpid = ""
-        Corpsecret = ""
+	Corpsecret = ""
 	Urlsend = "https://qyapi.weixin.qq.com/cgi-bin/message/send"
 	Urlget = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"
 )

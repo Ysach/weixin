@@ -1,11 +1,13 @@
 <component name="libraryTable">
   <library name="GOPATH &lt;weixin&gt;">
     <CLASSES>
-      <root url="file://D:/go/src/github.com" />
+      <root url="file://$PROJECT_DIR$/../Go/src/github.com" />
+      <root url="file://$PROJECT_DIR$/../Go/src/golang.org" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="file://D:/go/src/github.com" />
+      <root url="file://$PROJECT_DIR$/../Go/src/github.com" />
+      <root url="file://$PROJECT_DIR$/../Go/src/golang.org" />
     </SOURCES>
     <excluded>
       <root url="file://$PROJECT_DIR$" />

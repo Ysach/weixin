@@ -73,16 +73,26 @@ func validateUrl(w http.ResponseWriter, r *http.Request) {
 	//fmt.Println("---content----", content)
 	cfb.CryptBlocks(content, content)
 	//截取字符串，将明文msg返回给微信
-	res_text := string(content)[20:39]
+	//res_text := string(content)[20:39]
+	res_content_slice := content[:(len(content)-7)]
+	var res_content_slice_new = []uint8{}
+	for _, v := range res_content_slice {
+		if v != 0 && v != 19 {
+			res_content_slice_new = append(res_content_slice_new, v)
+		}
+
+	}
+	res_content_temp_slice := res_content_slice_new[16:]
+	res_content := res_content_temp_slice[:(len(res_content_temp_slice)-len(sCorpID))]
 	//获取解密的copID值
-	corpID := string(content)[(len(string(content))-len(sCorpID))-7:(len(string(content))-len(sCorpID))+11]
+	corpID := res_content_temp_slice[(len(res_content_temp_slice)-len(sCorpID)):]
 	//fmt.Println(copID)
-	fmt.Println(corpID)
-	if corpID != sCorpID {
+	fmt.Println(string(corpID))
+	if string(corpID) != sCorpID {
 		fmt.Println("CorpID不相等，非法的请求!!")
 	}
 
-	fmt.Fprintf(w, res_text)
+	fmt.Fprintf(w, string(res_content))
 }
 
 func apiRequest(w http.ResponseWriter, r *http.Request) {
