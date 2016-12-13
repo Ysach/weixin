@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b002586-1a2b-43b7-a328-c957221a28fd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/GOPATH__weixin_.xml" afterPath="$PROJECT_DIR$/.idea/libraries/GOPATH__weixin_.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wx/wxsend.go" afterPath="$PROJECT_DIR$/wx/wxsend.go" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wxserver.go" afterPath="$PROJECT_DIR$/wxserver.go" />
@@ -35,7 +33,7 @@
         <entry file="file://$PROJECT_DIR$/wxserver.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="147">
-              <caret line="22" column="20" lean-forward="true" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+              <caret line="22" column="19" lean-forward="false" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -45,7 +43,7 @@
         <entry file="file://$PROJECT_DIR$/wx/wxsend.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="315">
-              <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+              <caret line="15" column="22" lean-forward="false" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
               <folding>
                 <element signature="e#16#117#0" expanded="true" />
               </folding>
@@ -64,6 +62,12 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--follow-tags" />
+        <option name="title" value="Current Branch" />
+      </GitPushTagMode>
+    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -139,8 +143,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="go" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="configurable.Global.libraries.is.expanded" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="go.libraries.notification.had.been.shown" value="true" />
@@ -148,6 +151,7 @@
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="js.eslint.eslintPackage" value="" />
+    <property name="GO_FMT" value="false" />
   </component>
   <component name="RunManager" selected="Go Application.Build wxserver.go and run">
     <configuration default="false" name="Build wxserver.go and run" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
@@ -444,12 +448,27 @@
       <workItem from="1480294412928" duration="14900000" />
       <workItem from="1481018889608" duration="696000" />
       <workItem from="1481072657992" duration="1421000" />
-      <workItem from="1481609289558" duration="7261000" />
+      <workItem from="1481609289558" duration="8289000" />
     </task>
+    <task id="LOCAL-00001" summary="update return result use slice">
+      <created>1481617026477</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1481617026477</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update return result use slice">
+      <created>1481617830295</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1481617830295</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80462000" />
+    <option name="totallyTimeSpent" value="81490000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -503,6 +522,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update return result use slice" />
+    <option name="LAST_COMMIT_MESSAGE" value="update return result use slice" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -580,7 +603,7 @@
     <entry file="file://$PROJECT_DIR$/wxserver.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
-          <caret line="22" column="20" lean-forward="true" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+          <caret line="22" column="19" lean-forward="false" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -588,7 +611,7 @@
     <entry file="file://$PROJECT_DIR$/wx/wxsend.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
-          <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+          <caret line="15" column="22" lean-forward="false" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
           <folding>
             <element signature="e#16#117#0" expanded="true" />
           </folding>
