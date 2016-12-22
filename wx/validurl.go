@@ -14,9 +14,9 @@ import (
 )
 
 const (
-	token = ""
-	EncodingAESKey = ""
-	sCorpID = ""
+	token = "farmer"
+	EncodingAESKey = "w8rEhj66F7FEFntY76xnxWSw3OJtNGsiPRppBlC8Jsb"
+	sCorpID = "wx107a9dfc59f70f80"
 )
 
 func makeSignature(timestamp, nonce string, echostr string) string {
