@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	token = "farmer"
-	EncodingAESKey = "w8rEhj66F7FEFntY76xnxWSw3OJtNGsiPRppBlC8Jsb"
-	sCorpID = "wx107a9dfc59f70f80"
+	token = ""
+	EncodingAESKey = ""
+	sCorpID = ""
 )
 
 type wxRequestBody struct {

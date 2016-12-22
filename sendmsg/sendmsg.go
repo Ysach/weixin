@@ -21,9 +21,9 @@ const msg_url = ""
 func Sendmsg(msg string, phone string) error {
 
 	var s SendMsg
-	s.Access_token = "Ops"
-	s.Current_user_id = 123
-	s.Key = "^%&&^&GHGH#huhuyhu3yru"
+	s.Access_token = ""
+	s.Current_user_id = 
+	s.Key = ""
 	s.Msg = msg
 	s.Phone = phone
 
