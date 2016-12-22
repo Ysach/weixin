@@ -14,8 +14,8 @@ import (
 const (
 	Corpid = ""
 	Corpsecret = ""
-	Urlsend = "https://qyapi.weixin.qq.com/cgi-bin/message/send"
-	Urlget = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"
+	Urlsend = ""
+	Urlget = ""
 )
 
 type GetAccessToken struct {
@@ -73,12 +73,15 @@ func PostCustomMsg(toUser, msg string) error  {
 	}
 	//设置Header
 	postReq.Header.Set("Content-Type", "application/json; encoding=utf-8")
+
 	client := &http.Client{}
 	presp, err := client.Do(postReq)
 	if err != nil {
 		return err
 	}
+
 	presp.Body.Close()
+
 	return nil
 
 }
