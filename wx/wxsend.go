@@ -12,10 +12,10 @@ import (
 )
 
 const (
-	Corpid = "wx107a9dfc59f70f80"
-	Corpsecret = "P1VZn9dDsk4exPAPSbxwGPdnaW2eN-tR6xh3ZDdYAwNRPEgwhkm6k9s1QbVrSzWa"
-	Urlsend = "https://qyapi.weixin.qq.com/cgi-bin/message/send"
-	Urlget = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?"
+	Corpid = ""
+	Corpsecret = ""
+	Urlsend = ""
+	Urlget = ""
 )
 
 type GetAccessToken struct {

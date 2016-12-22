@@ -16,7 +16,7 @@ type SendMsg struct {
 	Msg string `json:"msg"`
 }
 
-const msg_url = "http://210.12.126.20:9998/sb/openapi/inner_sms"
+const msg_url = ""
 
 func Sendmsg(msg string, phone string) error {
 
